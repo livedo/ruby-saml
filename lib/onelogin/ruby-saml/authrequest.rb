@@ -97,7 +97,7 @@ module OneLogin
         request_doc = XMLSecurity::Document.new
         request_doc.uuid = uuid
 
-        root = request_doc.add_element "samlp:AuthnRequest", { "xmlns:samlp" => "urn:oasis:names:tc:SAML:2.0:protocol", "xmlns:saml" => "urn:oasis:names:tc:SAML:2.0:assertion" }
+        root = request_doc.add_element "samlp:AuthnRequest", { "xmlns:samlp" => "urn:oasis:names:tc:SAML:2.0:protocol" }
         root.attributes['ID'] = uuid
         root.attributes['IssueInstant'] = time
         root.attributes['Version'] = "2.0"
@@ -112,7 +112,7 @@ module OneLogin
           root.attributes["AssertionConsumerServiceURL"] = settings.assertion_consumer_service_url
         end
         if settings.issuer != nil
-          issuer = root.add_element "saml:Issuer"
+          issuer = root.add_element "saml:Issuer", { "xmlns:saml" => "urn:oasis:names:tc:SAML:2.0:assertion" }
           issuer.text = settings.issuer
         end
         root.add_element "samlp:NameIDPolicy", {
